@@ -1,0 +1,7 @@
+version: "3"
+services:
+    file-commons:
+        image: ostrowskirenan/file-commons:dev
+        container_name: file-commons
+        ports:
+        - 8444:8444
