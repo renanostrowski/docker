@@ -2,6 +2,10 @@ version: "3"
 services:
     file-commons:
         image: ostrowskirenan/file-commons:dev
+        deploy:
+            replicas: 8
+            placement:
+                constraints: [node.role==worker]
         container_name: file-commons
         ports:
         - 8444:8444
