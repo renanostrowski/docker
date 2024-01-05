@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    placement:
+        constraints: [node.role==manager]
+    container_name: db_postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./dados/postgres:/var/lib/postgresql/data
+      - ./db/01-init.sh:/docker-entrypoint-initdb.d/01-init.sh
+    environment:
+      - POSTGRES_PASSWORD=a9x35fx0
+      - POSTGRES_USER=ged
+      - POSTGRES_DB=spring_batch
+    networks:
+      - postgres_spring_batch
+
+  pgadmin:
+    image: dpage/pgadmin4
+    deploy:
+      placement:
+        constraints: [node.role==manager]
+    container_name: pgadnin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "a9x35fx0"
+    ports:
+      - "16543:80"
+    volumes:
+      - ./dados/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+    networks:
+      - postgres_spring_batch
+  
+networks: 
+  postgres_spring_batch:
+    driver: bridge
