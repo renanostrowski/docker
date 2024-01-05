@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  site2:
+    image: nginx
+    deploy:
+      replicas: 8
+      placement:
+        constraints: [node.role==worker]
+    ports:
+      - "8000:80"
